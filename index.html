@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Davide Campoli</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+		<body>
+			<main class="container">
+				<!-- Logo from assets; will scale responsively -->
+				<img src="assets/logo.png" alt="Davide Campoli logo" class="logo" />
+
+				<!-- Tagline in white using Athabasca -->
+				<p class="tagline">Crafting storytellings and visual identities for brands and cultural organizations</p>
+			</main>
+
+			<!-- Email fixed at bottom center -->
+			<footer class="page-email"><a href="mailto:davidecampoli1@gmail.com">davidecampoli1@gmail.com</a></footer>
+
+			<script>
+			// Plant a little tree where the user clicks. Uses the same SVG used for the cursor.
+			(function(){
+				const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><rect x='14' y='22' width='4' height='6' fill='saddlebrown'/><rect x='8' y='16' width='16' height='6' fill='forestgreen'/><rect x='10' y='10' width='12' height='6' fill='forestgreen'/><rect x='12' y='6' width='8' height='6' fill='forestgreen'/></svg>";
+				const treeDataUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+
+				document.addEventListener('click', function(e){
+					// ignore if user is selecting text or interacting with inputs
+					const tag = e.target.tagName.toLowerCase();
+					if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+					const img = document.createElement('img');
+					img.src = treeDataUrl;
+					img.className = 'planted-tree';
+					// position using fixed coordinates so it stays aligned with the viewport
+					img.style.left = e.clientX + 'px';
+					img.style.top = e.clientY + 'px';
+					document.body.appendChild(img);
+
+					// optional: remove after some time to avoid infinite growth (keep for now)
+					// setTimeout(()=> img.remove(), 20000);
+				});
+			})();
+			</script>
+			</body>
+</html>
+

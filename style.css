@@ -1,0 +1,128 @@
+/* Minimal styles: white background, black text, centered content */
+:root{
+	--bg: #ffffff;
+	--text: #000000;
+	--max-width: 720px;
+
+}
+
+/*
+	Athabasca font support:
+	- If you have Athabasca font files, place them in a `fonts/` folder next to this CSS
+		(e.g. ./fonts/Athabasca.woff2 and ./fonts/Athabasca.woff).
+	- The @font-face below will try a local install first, then fall back to the files in ./fonts/.
+	- If you use a CDN or a different path, update the `url()` values accordingly.
+*/
+
+@font-face {
+	font-family: 'Athabasca';
+	/* Try several common local names (installed font may expose a slightly different family name) */
+	src: local('Athabasca'), local('Athabasca Regular'), local('Athabasca-Regular'),
+	     local('Athabasca Std'), local('AthabascaStd'), local('AthabascaPro'), local('AthabascaPro-Regular'),
+	     url('fonts/Athabasca.woff2') format('woff2'),
+	     url('fonts/Athabasca.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+body{
+	margin:0;
+	/* Use the provided background image in assets (falls back to white) */
+	background-color:var(--bg);
+	background-image: url('assets/sfondo.png');
+	background-size: cover;
+	background-position: center center;
+	color:var(--text);
+	/* Prefer Athabasca (local or ./fonts/), fall back to system fonts */
+	font-family: 'Athabasca', Inter, Roboto, -apple-system, system-ui, "Segoe UI", "Helvetica", "Arial", sans-serif;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+	min-height:100vh;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:32px;
+}
+
+.container{
+	max-width:var(--max-width);
+	text-align:center;
+	/* Ensure content sits above background image */
+	position: relative;
+	z-index: 1;
+}
+
+/* Logo */
+.logo{
+	display:block;
+	/* Make the logo even larger: allow up to 1800px or 100% of viewport width */
+	max-width: min(1800px, 100%);
+	/* Allow taller logo while preventing it from exceeding the viewport height */
+	max-height: 85vh;
+	width: auto; /* preserve natural aspect ratio */
+	height: auto;
+	margin: 0 auto 6px; /* smaller gap below logo */
+	object-fit: contain;
+}
+
+
+.tagline{
+	color: #ffffff;
+	font-family: 'Athabasca', Inter, Roboto, -apple-system, system-ui, "Segoe UI", "Helvetica", "Arial", sans-serif;
+	/* Force usage for debugging if the local name mismatches; remove !important later if all OK */
+	font-family: 'Athabasca', Inter, Roboto, -apple-system, system-ui, "Segoe UI", "Helvetica", "Arial", sans-serif !important;
+	font-size: clamp(18px, 2.6vw, 28px);
+	line-height: 1.2;
+	margin: 2px 0;
+	max-width: 820px;
+	text-align: center;
+	text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+}
+
+/* Email fixed at bottom center */
+.page-email{
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 24px;
+	z-index: 2;
+}
+.page-email a{
+	color: #ffffff;
+	text-decoration: none;
+	font-family: 'Athabasca', Inter, Roboto, -apple-system, system-ui, "Segoe UI", "Helvetica", "Arial", sans-serif !important;
+	font-size: 16px;
+	letter-spacing: 0.3px;
+	text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+}
+.page-email a:hover{ text-decoration: underline }
+
+/* Custom pixel-tree cursor (SVG data URI). Hotspot set near the bottom center. */
+/* If the cursor doesn't show in your browser, try a different browser or provide a .cur/.png file in assets and I can point to it. */
+body, a, .logo, .tagline, .page-email {
+	cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'%20width='32'%20height='32'%20viewBox='0%200%2032%2032'><rect%20x='14'%20y='22'%20width='4'%20height='6'%20fill='saddlebrown'/><rect%20x='8'%20y='16'%20width='16'%20height='6'%20fill='forestgreen'/><rect%20x='10'%20y='10'%20width='12'%20height='6'%20fill='forestgreen'/><rect%20x='12'%20y='6'%20width='8'%20height='6'%20fill='forestgreen'/></svg>") 16 28, auto;
+}
+
+/* Planted trees (created on click) */
+.planted-tree{
+	position: fixed;
+	width: 32px;
+	height: 32px;
+	pointer-events: none; /* clicks pass through planted trees */
+	transform: translate(-50%, -100%) scale(0.0);
+	transform-origin: 50% 100%;
+	will-change: transform, opacity;
+	z-index: 10;
+	animation: tree-pop 360ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes tree-pop{
+	0%{ transform: translate(-50%, -100%) scale(0); opacity:0 }
+	70%{ transform: translate(-50%, -100%) scale(1.08); opacity:1 }
+	100%{ transform: translate(-50%, -100%) scale(1); opacity:1 }
+}
+
